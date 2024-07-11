@@ -1,0 +1,49 @@
+/* Query 1 - query used for the first insight*/
+SELECT billingcountry,
+       Count(*) AS rock_song
+FROM   genre a
+       JOIN track b
+         ON a.genreid = b.genreid
+            AND a.NAME = 'Rock'
+       JOIN invoiceline c
+         ON c.trackid = b.trackid
+       JOIN invoice d
+         ON c.invoiceid = d.invoiceid
+GROUP  BY 1
+ORDER  BY 2 DESC 
+
+
+/* Query 2 - query used for the second insight*/
+SELECT d.Name,
+       count(b.Name)AS songs
+FROM Genre a
+JOIN Track b ON b.GenreId = a.GenreId
+AND a.Name ='Rock'
+JOIN Album c ON c.AlbumId =b.AlbumId
+JOIN Artist d ON d.ArtistId =c.ArtistId
+GROUP BY 1
+ORDER BY 2 DESC
+
+
+/* Query 3 - query used for the third insight*/
+SELECT a.Name AS Artist,
+       sum(c.UnitPrice *Quantity)AS Total_earnings_by_user
+FROM Artist a
+JOIN Album b ON a.ArtistId =b.ArtistId
+JOIN Track c ON c.AlbumId = b.AlbumId
+JOIN InvoiceLine d ON d.TrackId = c.TrackId
+JOIN Invoice e ON e.InvoiceId = d.InvoiceId
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 10
+
+/* Query 4 - query used for the fourth insight*/
+SELECT a.name,
+       count(*)AS num_tracks
+FROM Genre a
+JOIN Track b ON a.GenreId = b.GenreId
+GROUP BY 1
+ORDER BY 2 DESC
+
+
+
